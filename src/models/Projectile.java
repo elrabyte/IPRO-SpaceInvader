@@ -4,8 +4,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import gamepanels.GamePanel;
+import interfaces.IProjectile;
 
-public class Projectile {
+public class Projectile implements IProjectile {
     private int x, y;
     private final int speed;
     private final boolean fromPlayer;
@@ -20,7 +21,7 @@ public class Projectile {
         this.fromPlayer = fromPlayer;
     }
 
-    public void update() {
+    public void updateState() {
         y += speed;
         if (y < -height || y > CLEANUP_THRESHOLD) active = false;
     }
@@ -33,5 +34,6 @@ public class Projectile {
     public boolean isFromPlayer() { return fromPlayer; }
     public boolean isActive() { return active; }
     public void deactivate() { active = false; }
-    public Rectangle getBounds() { return new Rectangle(x - width / 2, y, width, height); }
+    public Rectangle getHitBox() { return new Rectangle(x - width / 2, y, width, height); }
+    public int getSpeed() { return speed; }
 }

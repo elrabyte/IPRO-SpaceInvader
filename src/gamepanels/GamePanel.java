@@ -79,18 +79,8 @@ public class GamePanel extends JPanel implements ActionListener {
         spawnEnemies();
         addScorePerTimePassed();
 
-        // --- Update enemies ---
-        for (IEnemy enemy : enemies) {
-            enemy.applySpeedMultiplier(speedMultiplier);
-            enemy.updateState(player.getX(), player.getY());
-            if (enemy instanceof IShooting) {
-                ((IShooting) enemy).shoot(projectiles);
-            }
-        }
-
-        // --- Update projectiles ---
-        for (Projectile p : projectiles) p.update();
-
+        updateEnemies();
+        updateProjectiles();
 
         handleCollision();
 
@@ -105,6 +95,18 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    private void updateEnemies() {
+        for (IEnemy enemy : enemies) {
+            enemy.applySpeedMultiplier(speedMultiplier);
+            enemy.updateState(player.getX(), player.getY());
+            if (enemy instanceof IShooting) {
+                ((IShooting) enemy).shoot(projectiles);
+            }
+        }
+    }
+    private void updateProjectiles() {
+        for (Projectile p : projectiles) p.updateState();
+    }
     private void handleSpeedMultiplier() {
         speedMultiplier = 1.0 + tickCount / 1000.0;
     }
@@ -123,7 +125,7 @@ public class GamePanel extends JPanel implements ActionListener {
         for (Projectile p : projectiles) {
             if (!p.isActive() || !p.isFromPlayer()) continue;
             for (IEnemy enemy : enemies) {
-                if (enemy.isAlive() && p.getBounds().intersects(enemy.getHitBox())) {
+                if (enemy.isAlive() && p.getHitBox().intersects(enemy.getHitBox())) {
                     enemy.takeDamage(1);
                     p.deactivate();
                     if (!enemy.isAlive()) score += 10;
@@ -136,7 +138,7 @@ public class GamePanel extends JPanel implements ActionListener {
         Rectangle playerBounds = player.getBounds();
         for (Projectile p : projectiles) {
             if (!p.isActive() || p.isFromPlayer()) continue;
-            if (p.getBounds().intersects(playerBounds)) {
+            if (p.getHitBox().intersects(playerBounds)) {
                 player.takeDamage(1);
                 p.deactivate();
             }
