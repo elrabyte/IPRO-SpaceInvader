@@ -1,4 +1,12 @@
+package gamepanels;
 import javax.swing.*;
+
+import models.Asteroid;
+import models.EnemyShip;
+import models.PlayerShip;
+import interfaces.IEnemy;
+import models.Projectile;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -72,18 +80,7 @@ public class GamePanel extends JPanel implements ActionListener {
         // --- Speed multiplier increases over time ---
         double speedMult = 1.0 + tickCount / 1800.0;
 
-        // --- Spawn enemies ---
-        spawnCooldown--;
-        if (spawnCooldown <= 0) {
-            int spawnX = 40 + RNG.nextInt(screenWidth - 80);
-            if (RNG.nextBoolean()) {
-                enemies.add(new EnemyShip(spawnX, -20));
-            } else {
-                enemies.add(new Asteroid(spawnX, -20, player.getX(), player.getY()));
-            }
-            // Decrease interval over time, minimum 40 ticks
-            spawnCooldown = Math.max(40, 120 - tickCount / 60);
-        }
+        spawnEnemies();        
 
         // --- Update enemies ---
         for (IEnemy enemy : enemies) {
@@ -93,6 +90,21 @@ public class GamePanel extends JPanel implements ActionListener {
         // --- Update projectiles ---
         for (Projectile p : projectiles) p.update();
 
+
+        handleCollision();
+
+        // --- Remove dead/out-of-bounds entities ---
+        enemies.removeIf(en -> !en.isAlive() || en.getY() > screenHeight + 40);
+        projectiles.removeIf(p -> !p.isActive());
+
+        // --- Check game over ---
+        if (player.getHp() <= 0) {
+            gameOver = true;
+            gameTimer.stop();
+        }
+    }
+
+    private void handleCollision(){
         // --- Collision: player projectile vs enemy ---
         for (Projectile p : projectiles) {
             if (!p.isActive() || !p.isFromPlayer()) continue;
@@ -124,15 +136,19 @@ public class GamePanel extends JPanel implements ActionListener {
                 score += 10;
             }
         }
+    }
 
-        // --- Remove dead/out-of-bounds entities ---
-        enemies.removeIf(en -> !en.isAlive() || en.getY() > screenHeight + 40);
-        projectiles.removeIf(p -> !p.isActive());
-
-        // --- Check game over ---
-        if (player.getHp() <= 0) {
-            gameOver = true;
-            gameTimer.stop();
+    private void spawnEnemies() {
+        spawnCooldown--;
+        if (spawnCooldown <= 0) {
+            int spawnX = 40 + RNG.nextInt(screenWidth - 80);
+            if (RNG.nextBoolean()) {
+                enemies.add(new EnemyShip(spawnX, -20));
+            } else {
+                enemies.add(new Asteroid(spawnX, -20, player.getX(), player.getY()));
+            }
+            // Decrease interval over time, minimum 40 ticks
+            spawnCooldown = Math.max(40, 120 - tickCount / 60);
         }
     }
 

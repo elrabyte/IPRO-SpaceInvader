@@ -1,4 +1,7 @@
-public interface PlayerEntity {
+package interfaces;
+import models.Projectile;
+
+public interface IPlayerEntity {
     void move(int dx, int dy);
     void shoot(java.util.List<Projectile> projectiles);
     int getHp();

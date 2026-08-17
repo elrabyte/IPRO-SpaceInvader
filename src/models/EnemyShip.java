@@ -1,5 +1,8 @@
+package models;
 import java.awt.*;
 import java.util.List;
+
+import interfaces.IEnemy;
 
 public class EnemyShip implements IEnemy {
     private int x, y;

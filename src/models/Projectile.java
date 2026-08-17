@@ -1,6 +1,9 @@
+package models;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+
+import gamepanels.GamePanel;
 
 public class Projectile {
     private int x, y;
