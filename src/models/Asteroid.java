@@ -31,9 +31,9 @@ public class Asteroid implements IEnemy {
     }
 
     @Override
-    public void update(int playerX, int playerY, List<Projectile> projectiles) {
-        x += vx * getSpeed() ;
-        y += vy * getSpeed() ;
+    public void updateState(int playerX, int playerY) {
+        x += vx * getSpeed();
+        y += vy * getSpeed();
     }
 
     @Override

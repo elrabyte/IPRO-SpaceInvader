@@ -5,6 +5,7 @@ import models.Asteroid;
 import models.EnemyShip;
 import models.PlayerShip;
 import interfaces.IEnemy;
+import interfaces.IShooting;
 import models.Projectile;
 
 import java.awt.*;
@@ -81,7 +82,10 @@ public class GamePanel extends JPanel implements ActionListener {
         // --- Update enemies ---
         for (IEnemy enemy : enemies) {
             enemy.applySpeedMultiplier(speedMultiplier);
-            enemy.update(player.getX(), player.getY(), projectiles);
+            enemy.updateState(player.getX(), player.getY());
+            if (enemy instanceof IShooting) {
+                ((IShooting) enemy).shoot(projectiles);
+            }
         }
 
         // --- Update projectiles ---

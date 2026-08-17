@@ -3,8 +3,9 @@ import java.awt.*;
 import java.util.List;
 
 import interfaces.IEnemy;
+import interfaces.IShooting;
 
-public class EnemyShip implements IEnemy {
+public class EnemyShip implements IEnemy, IShooting {
     private int x, y;
     private static final int maxHp = 1;
     private int hp = maxHp;
@@ -22,18 +23,21 @@ public class EnemyShip implements IEnemy {
 
     @Override
     public void applySpeedMultiplier(double speedMultiplier) {
-        shootCoolDown = Math.max(minShootCoolDown, (int)(80 / speedMultiplier));
+        shootCoolDown = Math.max(minShootCoolDown, (int)(shootCoolDown / speedMultiplier));
     }
 
     @Override
-    public void update(int playerX, int playerY, List<Projectile> projectiles) {
-        y += getSpeed();
-
+    public void shoot(List<Projectile> projectiles) {
         currentShootCooldown--;
         if (currentShootCooldown <= 0) {
             projectiles.add(new Projectile(x, y + SIZE, 5, false));
             currentShootCooldown = shootCoolDown;
         }
+    }
+
+    @Override
+    public void updateState(int playerX, int playerY) {
+        y += getSpeed();
     }
 
     @Override
@@ -59,4 +63,6 @@ public class EnemyShip implements IEnemy {
     @Override public int getMaxHp() { return maxHp; }
     @Override public Color getColor() { return Color.RED; }
     @Override public int getSpeed() { return speed; }
+
+    
 }

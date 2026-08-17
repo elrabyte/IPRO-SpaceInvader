@@ -1,7 +1,5 @@
 package interfaces;
-import models.Projectile;
 
-public interface IPlayerEntity extends IEntity {
+public interface IPlayerEntity extends IEntity, IShooting {
     void move(int dx, int dy);
-    void shoot(java.util.List<Projectile> projectiles);
 }
