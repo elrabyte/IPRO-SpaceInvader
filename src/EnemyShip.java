@@ -6,22 +6,21 @@ public class EnemyShip implements Enemy {
     private int x, y;
     private int hp = 1;
     private static final int SIZE = 16;
-    private int shootCooldown;
-    private static final Random RNG = new Random();
+    private static final int shootCoolDown = 60;
+    private int currentShootCooldown = shootCoolDown;
 
     public EnemyShip(int x, int y) {
         this.x = x;
         this.y = y;
-        this.shootCooldown = 40 + RNG.nextInt(80);
     }
 
     @Override
     public void update(int playerX, int playerY, double speedMultiplier, List<Projectile> projectiles) {
         y += (int)(2 * speedMultiplier);
-        shootCooldown--;
-        if (shootCooldown <= 0) {
+        currentShootCooldown--;
+        if (currentShootCooldown <= 0) {
             projectiles.add(new Projectile(x, y + SIZE, 5, false));
-            shootCooldown = 50 + RNG.nextInt(60);
+            currentShootCooldown = shootCoolDown;
         }
     }
 
