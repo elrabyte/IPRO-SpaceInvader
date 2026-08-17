@@ -3,6 +3,7 @@ import java.awt.*;
 import java.util.List;
 
 import interfaces.IPlayerEntity;
+import interfaces.IProjectile;
 
 public class PlayerShip implements IPlayerEntity {
     private int x, y;
@@ -29,13 +30,13 @@ public class PlayerShip implements IPlayerEntity {
     }
 
     @Override
-    public void shoot(List<Projectile> projectiles) {
+    public void shoot(List<IProjectile> projectiles) {
         tryShoot(projectiles);
     }
 
-    private boolean tryShoot(List<Projectile> projectiles) {
+    private boolean tryShoot(List<IProjectile> projectiles) {
         if (currentShootCooldown <= 0) {
-            projectiles.add(new Projectile(x, y - SIZE, -10, true));
+            projectiles.add(new PlayerSingleShotProjectile(x, y - SIZE));
             currentShootCooldown = shootCooldown;
             return true;
         }

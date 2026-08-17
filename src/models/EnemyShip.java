@@ -3,6 +3,7 @@ import java.awt.*;
 import java.util.List;
 
 import interfaces.IEnemy;
+import interfaces.IProjectile;
 import interfaces.IShooting;
 
 public class EnemyShip implements IEnemy, IShooting {
@@ -27,10 +28,10 @@ public class EnemyShip implements IEnemy, IShooting {
     }
 
     @Override
-    public void shoot(List<Projectile> projectiles) {
+    public void shoot(List<IProjectile> projectiles) {
         currentShootCooldown--;
         if (currentShootCooldown <= 0) {
-            projectiles.add(new Projectile(x, y + SIZE, 5, false));
+            projectiles.add(new EnemySingleShotProjectile(x, y + SIZE, 5));
             currentShootCooldown = shootCoolDown;
         }
     }

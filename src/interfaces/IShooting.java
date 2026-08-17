@@ -1,8 +1,8 @@
 package interfaces;
 
-import models.Projectile;
+import interfaces.IProjectile;
 
 public interface IShooting {    
-    void shoot(java.util.List<Projectile> projectiles);
+    void shoot(java.util.List<IProjectile> projectiles);
 
 }

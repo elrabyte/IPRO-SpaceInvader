@@ -5,8 +5,8 @@ import models.Asteroid;
 import models.EnemyShip;
 import models.PlayerShip;
 import interfaces.IEnemy;
+import interfaces.IProjectile;
 import interfaces.IShooting;
-import models.Projectile;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private final javax.swing.Timer gameTimer;
     private final PlayerShip player;
     private final List<IEnemy> enemies = new ArrayList<>();
-    private final List<Projectile> projectiles = new ArrayList<>();
+    private final List<IProjectile> projectiles = new ArrayList<>();
 
     private int score = 0;
     private int tickCount = 0;
@@ -105,7 +105,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
     private void updateProjectiles() {
-        for (Projectile p : projectiles) p.updateState();
+        for (IProjectile p : projectiles) p.updateState();
     }
     private void handleSpeedMultiplier() {
         speedMultiplier = 1.0 + tickCount / 1000.0;
@@ -122,7 +122,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void handleCollision(){
         // --- Collision: player projectile vs enemy ---
-        for (Projectile p : projectiles) {
+        for (IProjectile p : projectiles) {
             if (!p.isActive() || !p.isFromPlayer()) continue;
             for (IEnemy enemy : enemies) {
                 if (enemy.isAlive() && p.getHitBox().intersects(enemy.getHitBox())) {
@@ -136,7 +136,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // --- Collision: enemy projectile vs player ---
         Rectangle playerBounds = player.getBounds();
-        for (Projectile p : projectiles) {
+        for (IProjectile p : projectiles) {
             if (!p.isActive() || p.isFromPlayer()) continue;
             if (p.getHitBox().intersects(playerBounds)) {
                 player.takeDamage(1);
@@ -184,7 +184,7 @@ public class GamePanel extends JPanel implements ActionListener {
         for (IEnemy enemy : enemies) enemy.render(g);
 
         // Draw projectiles
-        for (Projectile p : projectiles) p.render(g);
+        for (IProjectile p : projectiles) p.render(g);
 
         // Draw player
         player.render(g);
