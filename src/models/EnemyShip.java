@@ -6,7 +6,8 @@ import interfaces.IEnemy;
 
 public class EnemyShip implements IEnemy {
     private int x, y;
-    private int hp = 1;
+    private static final int maxHp = 1;
+    private int hp = maxHp;
     private static final int SIZE = 16;
     private static final int shootCoolDown = 80;
     private int currentShootCooldown = shootCoolDown;
@@ -46,4 +47,6 @@ public class EnemyShip implements IEnemy {
     @Override public void takeDamage(int amount) { hp -= amount; }
     @Override public boolean isAlive() { return hp > 0; }
     @Override public Rectangle getHitBox() { return new Rectangle(x - SIZE, y - SIZE, SIZE * 2, SIZE * 2); }
+    @Override public int getMaxHp() { return maxHp; }
+    @Override public Color getColor() { return Color.RED; }
 }

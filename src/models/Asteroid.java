@@ -32,7 +32,7 @@ public class Asteroid implements IEnemy {
     @Override
     public void render(Graphics g) {
         var colorHelper = new ColorHelper();
-        g.setColor(colorHelper.getColorForHp(maxHp, hp));
+        g.setColor(colorHelper.getColorForHp(getColor(), hp, maxHp));
         g.fillOval((int) x - RADIUS, (int) y - RADIUS, RADIUS * 2, RADIUS * 2);
         g.setColor(Color.GRAY);
         g.drawOval((int) x - RADIUS, (int) y - RADIUS, RADIUS * 2, RADIUS * 2);
@@ -41,7 +41,9 @@ public class Asteroid implements IEnemy {
     @Override public int getX() { return (int) x; }
     @Override public int getY() { return (int) y; }
     @Override public int getHp() { return hp; }
+    @Override public int getMaxHp() { return maxHp; }
     @Override public void takeDamage(int amount) { hp -= amount; }
     @Override public boolean isAlive() { return hp > 0; }
     @Override public Rectangle getHitBox() { return new Rectangle((int) x - RADIUS, (int) y - RADIUS, RADIUS * 2, RADIUS * 2); }
+    @Override public Color getColor() { return new Color(255, 100, 0); }
 }

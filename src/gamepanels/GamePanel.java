@@ -61,26 +61,21 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void update() {
         tickCount++;
-
-        // --- Player movement ---
-        int dx = 0, dy = 0;
-        if (keysDown.contains(KeyEvent.VK_A)) dx -= 1;
-        if (keysDown.contains(KeyEvent.VK_D)) dx += 1;
-        if (keysDown.contains(KeyEvent.VK_W)) dy -= 1;
-        if (keysDown.contains(KeyEvent.VK_S)) dy += 1;
-        player.move(dx, dy);
         
-        // --- Player shooting ---
+handlePlayerMovement();
+
         player.tick();
+
+        // --- Player shooting ---
         if (keysDown.contains(KeyEvent.VK_SPACE)) player.shoot(projectiles);
 
-        // --- Score: +1 per second (60 ticks) ---
-        if (tickCount % 60 == 0) score++;
+        addScorePerTimePassed();
 
         // --- Speed multiplier increases over time ---
         double speedMult = 1.0 + tickCount / 1800.0;
 
-        spawnEnemies();        
+        spawnEnemies();
+        addScorePerTimePassed();
 
         // --- Update enemies ---
         for (IEnemy enemy : enemies) {
@@ -102,6 +97,15 @@ public class GamePanel extends JPanel implements ActionListener {
             gameOver = true;
             gameTimer.stop();
         }
+    }
+
+    private void handlePlayerMovement() {
+        int dx = 0, dy = 0;
+        if (keysDown.contains(KeyEvent.VK_A)) dx -= 1;
+        if (keysDown.contains(KeyEvent.VK_D)) dx += 1;
+        if (keysDown.contains(KeyEvent.VK_W)) dy -= 1;
+        if (keysDown.contains(KeyEvent.VK_S)) dy += 1;
+        player.move(dx, dy);
     }
 
     private void handleCollision(){
@@ -138,6 +142,10 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+private void addScorePerTimePassed(){
+        if (tickCount % 60 == 0) score++;
+}
+
     private void spawnEnemies() {
         spawnCooldown--;
         if (spawnCooldown <= 0) {
@@ -169,14 +177,21 @@ public class GamePanel extends JPanel implements ActionListener {
         // Draw player
         player.draw(g);
 
-        // HUD
+        drawHUD(g);
+
+        drawGameOverScreen(g);
+    }
+    private void drawHUD(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Monospaced", Font.BOLD, 16));
         g.drawString("Score: " + score, screenWidth - 140, 24);
         g.drawString("HP: " + player.getHp(), screenWidth - 140, 44);
+    }
 
-        if (gameOver) {
-            g.setColor(new Color(0, 0, 0, 160));
+    private void drawGameOverScreen(Graphics g) {
+        if(!gameOver) return;
+
+        g.setColor(new Color(0, 0, 0, 160));
             g.fillRect(0, 0, screenWidth, screenHeight);
             g.setColor(Color.RED);
             g.setFont(new Font("Monospaced", Font.BOLD, 48));
@@ -193,7 +208,6 @@ public class GamePanel extends JPanel implements ActionListener {
             String replayMsg = "Press [R] to Play Again";
             fm = g.getFontMetrics();
             g.drawString(replayMsg, (screenWidth - fm.stringWidth(replayMsg)) / 2, screenHeight / 2 + 60);
-        }
     }
 
     private void restart() {

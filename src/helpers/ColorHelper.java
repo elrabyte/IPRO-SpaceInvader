@@ -4,8 +4,8 @@ import java.awt.Color;
 
 public class ColorHelper {
     
-    public Color getColorForHp(int maxHp, int currentHp) {
-        int hpColor = Math.max(0, Math.min(255, currentHp * 60 + 60));
-        return new Color(hpColor, hpColor / 2, 30);
+    public Color getColorForHp(Color baseColor, int currentHp, int maxHp) {
+        int alpha = (currentHp * 255) / maxHp;
+        return new Color(baseColor.getRed(), baseColor.getGreen(), baseColor.getBlue(), alpha);
     }
 }
