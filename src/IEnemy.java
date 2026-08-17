@@ -1,13 +1,13 @@
 import java.awt.Graphics;
 import java.util.List;
 
-public interface Enemy {
+public interface IEnemy {
     void update(int playerX, int playerY, double speedMultiplier, List<Projectile> projectiles);
-    void draw(Graphics g);
+    void render(Graphics g);
     int getX();
     int getY();
     int getHp();
     void takeDamage(int amount);
     boolean isAlive();
-    java.awt.Rectangle getBounds();
+    java.awt.Rectangle getHitBox();
 }

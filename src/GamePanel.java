@@ -6,12 +6,12 @@ import java.util.List;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    private static final int W = 800, H = 600;
+    public static final int screenWidth = 800, screenHeight = 600;
     private static final int TICK_MS = 16; // ~60fps
 
     private final javax.swing.Timer gameTimer;
     private final PlayerShip player;
-    private final List<Enemy> enemies = new ArrayList<>();
+    private final List<IEnemy> enemies = new ArrayList<>();
     private final List<Projectile> projectiles = new ArrayList<>();
 
     private int score = 0;
@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private static final Random RNG = new Random();
 
     public GamePanel() {
-        setPreferredSize(new Dimension(W, H));
+        setPreferredSize(new Dimension(screenWidth, screenHeight));
         setBackground(Color.BLACK);
         setFocusable(true);
 
@@ -44,6 +44,10 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!gameOver) update();
+        rerender();
+    }
+
+    private void rerender() {
         repaint();
     }
 
@@ -52,15 +56,15 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // --- Player movement ---
         int dx = 0, dy = 0;
-        if (keysDown.contains(KeyEvent.VK_A) || keysDown.contains(KeyEvent.VK_LEFT))  dx -= 1;
-        if (keysDown.contains(KeyEvent.VK_D) || keysDown.contains(KeyEvent.VK_RIGHT)) dx += 1;
-        if (keysDown.contains(KeyEvent.VK_W) || keysDown.contains(KeyEvent.VK_UP))    dy -= 1;
-        if (keysDown.contains(KeyEvent.VK_S) || keysDown.contains(KeyEvent.VK_DOWN))  dy += 1;
+        if (keysDown.contains(KeyEvent.VK_A)) dx -= 1;
+        if (keysDown.contains(KeyEvent.VK_D)) dx += 1;
+        if (keysDown.contains(KeyEvent.VK_W)) dy -= 1;
+        if (keysDown.contains(KeyEvent.VK_S)) dy += 1;
         player.move(dx, dy);
         
         // --- Player shooting ---
         player.tick();
-        if (keysDown.contains(KeyEvent.VK_SPACE)) player.tryShoot(projectiles);
+        if (keysDown.contains(KeyEvent.VK_SPACE)) player.shoot(projectiles);
 
         // --- Score: +1 per second (60 ticks) ---
         if (tickCount % 60 == 0) score++;
@@ -71,7 +75,7 @@ public class GamePanel extends JPanel implements ActionListener {
         // --- Spawn enemies ---
         spawnCooldown--;
         if (spawnCooldown <= 0) {
-            int spawnX = 40 + RNG.nextInt(W - 80);
+            int spawnX = 40 + RNG.nextInt(screenWidth - 80);
             if (RNG.nextBoolean()) {
                 enemies.add(new EnemyShip(spawnX, -20));
             } else {
@@ -82,7 +86,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         // --- Update enemies ---
-        for (Enemy enemy : enemies) {
+        for (IEnemy enemy : enemies) {
             enemy.update(player.getX(), player.getY(), speedMult, projectiles);
         }
 
@@ -92,8 +96,8 @@ public class GamePanel extends JPanel implements ActionListener {
         // --- Collision: player projectile vs enemy ---
         for (Projectile p : projectiles) {
             if (!p.isActive() || !p.isFromPlayer()) continue;
-            for (Enemy enemy : enemies) {
-                if (enemy.isAlive() && p.getBounds().intersects(enemy.getBounds())) {
+            for (IEnemy enemy : enemies) {
+                if (enemy.isAlive() && p.getBounds().intersects(enemy.getHitBox())) {
                     enemy.takeDamage(1);
                     p.deactivate();
                     if (!enemy.isAlive()) score += 10;
@@ -113,8 +117,8 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         // --- Collision: enemy body vs player ---
-        for (Enemy enemy : enemies) {
-            if (enemy.isAlive() && enemy.getBounds().intersects(playerBounds)) {
+        for (IEnemy enemy : enemies) {
+            if (enemy.isAlive() && enemy.getHitBox().intersects(playerBounds)) {
                 player.takeDamage(1);
                 enemy.takeDamage(enemy.getHp()); // destroy enemy on collision
                 score += 10;
@@ -122,7 +126,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         // --- Remove dead/out-of-bounds entities ---
-        enemies.removeIf(en -> !en.isAlive() || en.getY() > H + 40);
+        enemies.removeIf(en -> !en.isAlive() || en.getY() > screenHeight + 40);
         projectiles.removeIf(p -> !p.isActive());
 
         // --- Check game over ---
@@ -138,13 +142,13 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // Draw divider line for bottom third
         g.setColor(new Color(40, 40, 80));
-        g.drawLine(0, H * 2 / 3, W, H * 2 / 3);
+        g.drawLine(0, screenHeight * 2 / 3, screenWidth, screenHeight * 2 / 3);
 
         // Draw enemies
-        for (Enemy enemy : enemies) enemy.draw(g);
+        for (IEnemy enemy : enemies) enemy.render(g);
 
         // Draw projectiles
-        for (Projectile p : projectiles) p.draw(g);
+        for (Projectile p : projectiles) p.render(g);
 
         // Draw player
         player.draw(g);
@@ -152,27 +156,27 @@ public class GamePanel extends JPanel implements ActionListener {
         // HUD
         g.setColor(Color.WHITE);
         g.setFont(new Font("Monospaced", Font.BOLD, 16));
-        g.drawString("Score: " + score, W - 140, 24);
-        g.drawString("HP: " + player.getHp(), W - 140, 44);
+        g.drawString("Score: " + score, screenWidth - 140, 24);
+        g.drawString("HP: " + player.getHp(), screenWidth - 140, 44);
 
         if (gameOver) {
             g.setColor(new Color(0, 0, 0, 160));
-            g.fillRect(0, 0, W, H);
+            g.fillRect(0, 0, screenWidth, screenHeight);
             g.setColor(Color.RED);
             g.setFont(new Font("Monospaced", Font.BOLD, 48));
             String msg = "GAME OVER";
             FontMetrics fm = g.getFontMetrics();
-            g.drawString(msg, (W - fm.stringWidth(msg)) / 2, H / 2 - 20);
+            g.drawString(msg, (screenWidth - fm.stringWidth(msg)) / 2, screenHeight / 2 - 20);
             g.setColor(Color.WHITE);
             g.setFont(new Font("Monospaced", Font.PLAIN, 24));
             String scoreMsg = "Final Score: " + score;
             fm = g.getFontMetrics();
-            g.drawString(scoreMsg, (W - fm.stringWidth(scoreMsg)) / 2, H / 2 + 24);
+            g.drawString(scoreMsg, (screenWidth - fm.stringWidth(scoreMsg)) / 2, screenHeight / 2 + 24);
             g.setColor(Color.YELLOW);
             g.setFont(new Font("Monospaced", Font.PLAIN, 18));
             String replayMsg = "Press [R] to Play Again";
             fm = g.getFontMetrics();
-            g.drawString(replayMsg, (W - fm.stringWidth(replayMsg)) / 2, H / 2 + 60);
+            g.drawString(replayMsg, (screenWidth - fm.stringWidth(replayMsg)) / 2, screenHeight / 2 + 60);
         }
     }
 

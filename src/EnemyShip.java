@@ -1,12 +1,11 @@
 import java.awt.*;
 import java.util.List;
-import java.util.Random;
 
-public class EnemyShip implements Enemy {
+public class EnemyShip implements IEnemy {
     private int x, y;
     private int hp = 1;
     private static final int SIZE = 16;
-    private static final int shootCoolDown = 60;
+    private static final int shootCoolDown = 80;
     private int currentShootCooldown = shootCoolDown;
 
     public EnemyShip(int x, int y) {
@@ -25,11 +24,17 @@ public class EnemyShip implements Enemy {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void render(Graphics g) {
         g.setColor(Color.RED);
-        int[] xp = {x, x - SIZE, x + SIZE};
-        int[] yp = {y + SIZE, y - SIZE, y - SIZE};
-        g.fillPolygon(xp, yp, 3);
+        int bottomX = x;
+        int topLeftX = x - SIZE;
+        int topRightX = x + SIZE;
+        int bottomY = y + SIZE;
+        int topY = y - SIZE;
+        
+        int[] xCoords = {bottomX, topLeftX, topRightX};
+        int[] yCoords = {bottomY, topY, topY};
+        g.fillPolygon(xCoords, yCoords, 3);
     }
 
     @Override public int getX() { return x; }
@@ -37,5 +42,5 @@ public class EnemyShip implements Enemy {
     @Override public int getHp() { return hp; }
     @Override public void takeDamage(int amount) { hp -= amount; }
     @Override public boolean isAlive() { return hp > 0; }
-    @Override public Rectangle getBounds() { return new Rectangle(x - SIZE, y - SIZE, SIZE * 2, SIZE * 2); }
+    @Override public Rectangle getHitBox() { return new Rectangle(x - SIZE, y - SIZE, SIZE * 2, SIZE * 2); }
 }

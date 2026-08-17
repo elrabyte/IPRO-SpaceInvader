@@ -24,9 +24,11 @@ public class PlayerShip implements PlayerEntity {
     }
 
     @Override
-    public void shoot() { /* auto-shoot handled in tryShoot */ }
+    public void shoot(List<Projectile> projectiles) {
+        tryShoot(projectiles);
+    }
 
-    public boolean tryShoot(List<Projectile> projectiles) {
+    private boolean tryShoot(List<Projectile> projectiles) {
         if (shootCooldown <= 0) {
             projectiles.add(new Projectile(x, y - SIZE, -10, true));
             shootCooldown = SHOOT_INTERVAL;
