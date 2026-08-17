@@ -7,7 +7,8 @@ public class Projectile {
     private final int speed;
     private final boolean fromPlayer;
     private boolean active = true;
-    private static final int W = 4, H = 10;
+    private static final int width = 4, height = 10;
+    private static final int CLEANUP_THRESHOLD = GamePanel.screenHeight + 50; // beyond the bottom of the screen
 
     public Projectile(int x, int y, int speed, boolean fromPlayer) {
         this.x = x;
@@ -18,16 +19,16 @@ public class Projectile {
 
     public void update() {
         y += speed;
-        if (y < -H || y > 700) active = false;
+        if (y < -height || y > CLEANUP_THRESHOLD) active = false;
     }
 
-    public void draw(Graphics g) {
+    public void render(Graphics g) {
         g.setColor(fromPlayer ? Color.CYAN : Color.ORANGE);
-        g.fillRect(x - W / 2, y, W, H);
+        g.fillRect(x - width / 2, y, width, height);
     }
 
     public boolean isFromPlayer() { return fromPlayer; }
     public boolean isActive() { return active; }
     public void deactivate() { active = false; }
-    public Rectangle getBounds() { return new Rectangle(x - W / 2, y, W, H); }
+    public Rectangle getBounds() { return new Rectangle(x - width / 2, y, width, height); }
 }
