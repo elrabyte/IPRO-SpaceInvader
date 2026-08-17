@@ -12,7 +12,8 @@ public class PlayerShip implements IPlayerEntity {
     private static final int PANEL_W = 800;
     private static final int PANEL_H = 600;
     private static final int BOTTOM_THIRD_TOP = PANEL_H * 2 / 3;
-    private static final int SPEED = 4;
+    private static final int BaseSpeed = 4;
+    private int speed = BaseSpeed;
     private int currentShootCooldown = 0;
     private static final int shootCooldown = 20; // ticks
 
@@ -23,8 +24,8 @@ public class PlayerShip implements IPlayerEntity {
 
     @Override
     public void move(int dx, int dy) {
-        x = Math.max(SIZE, Math.min(PANEL_W - SIZE, x + dx * SPEED));
-        y = Math.max(BOTTOM_THIRD_TOP + SIZE, Math.min(PANEL_H - SIZE, y + dy * SPEED));
+        x = Math.max(SIZE, Math.min(PANEL_W - SIZE, x + dx * speed));
+        y = Math.max(BOTTOM_THIRD_TOP + SIZE, Math.min(PANEL_H - SIZE, y + dy * speed));
     }
 
     @Override
@@ -71,7 +72,11 @@ public class PlayerShip implements IPlayerEntity {
         return new Rectangle(x - SIZE, y - SIZE, SIZE * 2, SIZE * 2);
     }
 
-    public void draw(Graphics g) {
+    @Override public Rectangle getHitBox() { return getBounds(); }
+    @Override public boolean isAlive() { return hp > 0; }
+    @Override public int getSpeed() { return speed; }
+
+    public void render(Graphics g) {
         g.setColor(Color.GREEN);
         int[] xp = {x, x - SIZE, x + SIZE};
         int[] yp = {y - SIZE, y + SIZE, y + SIZE};
@@ -82,4 +87,11 @@ public class PlayerShip implements IPlayerEntity {
             g.fillRect(10 + i * 14, 10, 10, 10);
         }
     }
+
+    @Override
+    public void applySpeedMultiplier(double speedMultiplier) {
+        speed = (int)(BaseSpeed + speedMultiplier);
+    }
+
+    @Override public Color getColor() { return Color.GREEN; }
 }

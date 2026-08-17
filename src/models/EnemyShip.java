@@ -9,7 +9,10 @@ public class EnemyShip implements IEnemy {
     private static final int maxHp = 1;
     private int hp = maxHp;
     private static final int SIZE = 16;
-    private static final int shootCoolDown = 80;
+    private static final int baseSpeed = 2;
+    private int speed = baseSpeed;
+    private  int shootCoolDown = 80;
+    private static final int minShootCoolDown = 40;
     private int currentShootCooldown = shootCoolDown;
 
     public EnemyShip(int x, int y) {
@@ -18,10 +21,14 @@ public class EnemyShip implements IEnemy {
     }
 
     @Override
-    public void applySpeedMultiplier(double speedMultiplier) { y += (int)(2 * speedMultiplier); }
+    public void applySpeedMultiplier(double speedMultiplier) {
+        shootCoolDown = Math.max(minShootCoolDown, (int)(80 / speedMultiplier));
+    }
 
     @Override
     public void update(int playerX, int playerY, List<Projectile> projectiles) {
+        y += getSpeed();
+
         currentShootCooldown--;
         if (currentShootCooldown <= 0) {
             projectiles.add(new Projectile(x, y + SIZE, 5, false));
@@ -51,4 +58,5 @@ public class EnemyShip implements IEnemy {
     @Override public Rectangle getHitBox() { return new Rectangle(x - SIZE, y - SIZE, SIZE * 2, SIZE * 2); }
     @Override public int getMaxHp() { return maxHp; }
     @Override public Color getColor() { return Color.RED; }
+    @Override public int getSpeed() { return speed; }
 }

@@ -26,7 +26,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private int tickCount = 0;
     private int spawnCooldown = 120;
     private boolean gameOver = false;
-    private double enemySpeedMultiplier = 1.0;
+    private double speedMultiplier = 1.0;
 
     private final Set<Integer> keysDown = new HashSet<>();
     private static final Random RNG = new Random();
@@ -64,6 +64,7 @@ public class GamePanel extends JPanel implements ActionListener {
         tickCount++;
         
         handlePlayerMovement();
+        player.applySpeedMultiplier(speedMultiplier);
 
         player.tick();
 
@@ -72,14 +73,14 @@ public class GamePanel extends JPanel implements ActionListener {
 
         addScorePerTimePassed();
 
-        handleEnemySpeedMultiplier();
+        handleSpeedMultiplier();
 
         spawnEnemies();
         addScorePerTimePassed();
 
         // --- Update enemies ---
         for (IEnemy enemy : enemies) {
-            enemy.applySpeedMultiplier(enemySpeedMultiplier);
+            enemy.applySpeedMultiplier(speedMultiplier);
             enemy.update(player.getX(), player.getY(), projectiles);
         }
 
@@ -100,9 +101,8 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    private void handleEnemySpeedMultiplier() {   
-        final int TimeInTicksForSpeedIncrease = 1800; // 30 seconds at 60 ticks per second   
-        enemySpeedMultiplier = 1.0 + tickCount / (double) TimeInTicksForSpeedIncrease;
+    private void handleSpeedMultiplier() {
+        speedMultiplier = 1.0 + tickCount / 1000.0;
     }
 
     private void handlePlayerMovement() {
@@ -181,7 +181,7 @@ public class GamePanel extends JPanel implements ActionListener {
         for (Projectile p : projectiles) p.render(g);
 
         // Draw player
-        player.draw(g);
+        player.render(g);
 
         drawHUD(g);
 
@@ -190,14 +190,14 @@ public class GamePanel extends JPanel implements ActionListener {
     private void drawHUD(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Monospaced", Font.BOLD, 16));
-        final int hudX = screenWidth - 260;
+        final int hudX = screenWidth - 160;
         int lineHeight = 20;
         int hudY = 24;
         g.drawString("Score: " + score, hudX, hudY);
         hudY += lineHeight;
         g.drawString("HP: " + player.getHp(), hudX, hudY);
         hudY += lineHeight;
-        g.drawString("Enemy Speed: " + String.format("%.2f", enemySpeedMultiplier), hudX, hudY);
+        g.drawString("Speed: " + String.format("%.2f", speedMultiplier), hudX, hudY);
     }
 
     private void drawGameOverScreen(Graphics g) {

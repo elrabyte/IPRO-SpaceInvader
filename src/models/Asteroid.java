@@ -11,6 +11,8 @@ public class Asteroid implements IEnemy {
     private int hp = maxHp;
     private static final int RADIUS = 18;
     private double vx, vy;
+    private static final int baseSpeed = 2;
+    private int speed = baseSpeed;
 
     public Asteroid(int startX, int startY, int playerX, int playerY) {
         this.x = startX;
@@ -25,12 +27,13 @@ public class Asteroid implements IEnemy {
 
     @Override
     public void applySpeedMultiplier(double speedMultiplier) {
-        x += vx * 2 * speedMultiplier;
-        y += vy * 2 * speedMultiplier;
+        speed = (int)(baseSpeed * speedMultiplier);
     }
 
     @Override
     public void update(int playerX, int playerY, List<Projectile> projectiles) {
+        x += vx * getSpeed() ;
+        y += vy * getSpeed() ;
     }
 
     @Override
@@ -50,4 +53,5 @@ public class Asteroid implements IEnemy {
     @Override public boolean isAlive() { return hp > 0; }
     @Override public Rectangle getHitBox() { return new Rectangle((int) x - RADIUS, (int) y - RADIUS, RADIUS * 2, RADIUS * 2); }
     @Override public Color getColor() { return new Color(255, 100, 0); }
+    @Override public int getSpeed() { return speed; }
 }
