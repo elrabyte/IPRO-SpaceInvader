@@ -57,8 +57,10 @@ public class GamePanel extends JPanel implements ActionListener {
         if (keysDown.contains(KeyEvent.VK_W) || keysDown.contains(KeyEvent.VK_UP))    dy -= 1;
         if (keysDown.contains(KeyEvent.VK_S) || keysDown.contains(KeyEvent.VK_DOWN))  dy += 1;
         player.move(dx, dy);
+        
+        // --- Player shooting ---
         player.tick();
-        player.tryShoot(projectiles);
+        if (keysDown.contains(KeyEvent.VK_SPACE)) player.tryShoot(projectiles);
 
         // --- Score: +1 per second (60 ticks) ---
         if (tickCount % 60 == 0) score++;
