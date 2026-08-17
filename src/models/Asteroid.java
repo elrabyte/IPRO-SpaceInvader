@@ -24,9 +24,13 @@ public class Asteroid implements IEnemy {
     }
 
     @Override
-    public void update(int playerX, int playerY, double speedMultiplier, List<Projectile> projectiles) {
+    public void applySpeedMultiplier(double speedMultiplier) {
         x += vx * 2 * speedMultiplier;
         y += vy * 2 * speedMultiplier;
+    }
+
+    @Override
+    public void update(int playerX, int playerY, List<Projectile> projectiles) {
     }
 
     @Override

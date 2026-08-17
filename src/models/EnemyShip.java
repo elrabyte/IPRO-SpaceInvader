@@ -18,8 +18,10 @@ public class EnemyShip implements IEnemy {
     }
 
     @Override
-    public void update(int playerX, int playerY, double speedMultiplier, List<Projectile> projectiles) {
-        y += (int)(2 * speedMultiplier);
+    public void applySpeedMultiplier(double speedMultiplier) { y += (int)(2 * speedMultiplier); }
+
+    @Override
+    public void update(int playerX, int playerY, List<Projectile> projectiles) {
         currentShootCooldown--;
         if (currentShootCooldown <= 0) {
             projectiles.add(new Projectile(x, y + SIZE, 5, false));

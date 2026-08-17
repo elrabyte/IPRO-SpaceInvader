@@ -79,7 +79,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // --- Update enemies ---
         for (IEnemy enemy : enemies) {
-            enemy.update(player.getX(), player.getY(), enemySpeedMultiplier, projectiles);
+            enemy.applySpeedMultiplier(enemySpeedMultiplier);
+            enemy.update(player.getX(), player.getY(), projectiles);
         }
 
         // --- Update projectiles ---
