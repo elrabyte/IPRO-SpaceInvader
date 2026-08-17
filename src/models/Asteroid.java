@@ -1,9 +1,14 @@
+package models;
 import java.awt.*;
 import java.util.List;
 
+import helpers.ColorHelper;
+import interfaces.IEnemy;
+
 public class Asteroid implements IEnemy {
     private double x, y;
-    private int hp = 2;
+    private static int maxHp = 2;
+    private int hp = maxHp;
     private static final int RADIUS = 18;
     private double vx, vy;
 
@@ -26,8 +31,8 @@ public class Asteroid implements IEnemy {
 
     @Override
     public void render(Graphics g) {
-        int hp3Color = Math.max(0, Math.min(255, hp * 60 + 60));
-        g.setColor(new Color(hp3Color, hp3Color / 2, 30));
+        var colorHelper = new ColorHelper();
+        g.setColor(colorHelper.getColorForHp(maxHp, hp));
         g.fillOval((int) x - RADIUS, (int) y - RADIUS, RADIUS * 2, RADIUS * 2);
         g.setColor(Color.GRAY);
         g.drawOval((int) x - RADIUS, (int) y - RADIUS, RADIUS * 2, RADIUS * 2);

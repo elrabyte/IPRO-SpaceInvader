@@ -1,5 +1,8 @@
+package interfaces;
 import java.awt.Graphics;
 import java.util.List;
+
+import models.Projectile;
 
 public interface IEnemy {
     void update(int playerX, int playerY, double speedMultiplier, List<Projectile> projectiles);

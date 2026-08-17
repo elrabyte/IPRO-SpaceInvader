@@ -1,7 +1,10 @@
+package models;
 import java.awt.*;
 import java.util.List;
 
-public class PlayerShip implements PlayerEntity {
+import interfaces.IPlayerEntity;
+
+public class PlayerShip implements IPlayerEntity {
     private int x, y;
     private int hp = 3;
     private static final int SIZE = 20;
