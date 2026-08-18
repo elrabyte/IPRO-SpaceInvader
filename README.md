@@ -1,3 +1,3 @@
 # IPRO-SpaceInvader
 
-<img width="180" alt="Demo" src="demo.gif" />
+<img width="80%" alt="Demo" src="demo.gif" />
