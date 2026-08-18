@@ -1,3 +1,3 @@
 # IPRO-SpaceInvader
 
-<video width="180" src="demo.mp4" />
+<img width="180" alt="Demo" src="demo.gif" />
