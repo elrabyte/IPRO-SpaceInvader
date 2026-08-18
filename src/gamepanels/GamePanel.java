@@ -1,17 +1,15 @@
 package gamepanels;
-import javax.swing.*;
-
-import models.Asteroid;
-import models.EnemyShip;
-import models.PlayerShip;
 import interfaces.IEnemy;
 import interfaces.IProjectile;
 import interfaces.IShooting;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
+import javax.swing.*;
+import models.Asteroid;
+import models.EnemyShip;
+import models.PlayerShip;
 
 public class GamePanel extends JPanel implements ActionListener {
 
