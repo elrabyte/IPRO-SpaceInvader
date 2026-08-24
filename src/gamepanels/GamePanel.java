@@ -6,20 +6,21 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.*;
 import models.Asteroid;
 import models.EnemyShip;
 import models.PlayerShip;
 
-public class GamePanel extends PanelBase implements ActionListener {
+public class GamePanel extends PanelBase {
 
     public static final int screenWidth = 800, screenHeight = 600;
     private static final int TICK_MS = 16; // ~60fps
 
-    private final javax.swing.Timer gameTimer;
+    private final ScheduledExecutorService gameExecutor;
     private final Runnable onGameOver, onExitToMenu;
     private final PlayerShip player;
-    private final List<IEnemy> enemies = new ArrayList<>();
-    private final List<IProjectile> projectiles = new ArrayList<>();
+    private final List<IEnemy> enemies = new CopyOnWriteArrayList<>();
+    private final List<IProjectile> projectiles = new CopyOnWriteArrayList<>();
 
     private int score = 0;
     private int tickCount = 0;
@@ -27,7 +28,7 @@ public class GamePanel extends PanelBase implements ActionListener {
     private boolean gameOver = false;
     private double speedMultiplier = 1.0;
 
-    private final Set<Integer> keysDown = new HashSet<>();
+    private final Set<Integer> keysDown = Collections.synchronizedSet(new HashSet<>());
     private static final Random RNG = new Random();
 
     public GamePanel(Runnable onGameOver, Runnable onExitToMenu) {
@@ -48,18 +49,15 @@ public class GamePanel extends PanelBase implements ActionListener {
             @Override public void keyReleased(KeyEvent e) { keysDown.remove(e.getKeyCode()); }
         });
 
-        gameTimer = new javax.swing.Timer(TICK_MS, this);
-        gameTimer.start();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (!gameOver) update();
-        rerender();
-    }
-
-    private void rerender() {
-        repaint();
+        gameExecutor = Executors.newSingleThreadScheduledExecutor(r -> {
+            Thread t = new Thread(r, "game-loop");
+            t.setDaemon(true);
+            return t;
+        });
+        gameExecutor.scheduleAtFixedRate(() -> {
+            if (!gameOver) update();
+            repaint();
+        }, 0, TICK_MS, TimeUnit.MILLISECONDS);
     }
 
     private void update() {
@@ -75,8 +73,6 @@ public class GamePanel extends PanelBase implements ActionListener {
         handleSpeedMultiplier();
 
         spawnEnemies();
-        addScorePerTimePassed();
-
         updateEnemies();
         updateProjectiles();
 
@@ -89,7 +85,7 @@ public class GamePanel extends PanelBase implements ActionListener {
         // --- Check game over ---
         if (player.getHp() <= 0) {
             gameOver = true;
-            gameTimer.stop();
+            gameExecutor.shutdown();
         }
     }
 

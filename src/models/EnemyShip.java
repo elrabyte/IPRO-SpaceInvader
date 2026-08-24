@@ -13,7 +13,8 @@ public class EnemyShip implements IEnemy, IShooting {
     private static final int SIZE = 16;
     private static final int baseSpeed = 2;
     private int speed = baseSpeed;
-    private  int shootCoolDown = 80;
+    private static final int baseShootCoolDown = 80;
+    private int shootCoolDown = baseShootCoolDown;
     private static final int minShootCoolDown = 40;
     private int currentShootCooldown = shootCoolDown;
 
@@ -24,7 +25,8 @@ public class EnemyShip implements IEnemy, IShooting {
 
     @Override
     public void applySpeedMultiplier(double speedMultiplier) {
-        shootCoolDown = Math.max(minShootCoolDown, (int)(shootCoolDown / speedMultiplier));
+        speed = (int) Math.round(baseSpeed * speedMultiplier);
+        shootCoolDown = Math.max(minShootCoolDown, (int)(baseShootCoolDown / speedMultiplier));
     }
 
     @Override
