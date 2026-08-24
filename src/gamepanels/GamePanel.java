@@ -6,17 +6,17 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
-import javax.swing.*;
 import models.Asteroid;
 import models.EnemyShip;
 import models.PlayerShip;
 
-public class GamePanel extends JPanel implements ActionListener {
+public class GamePanel extends PanelBase implements ActionListener {
 
     public static final int screenWidth = 800, screenHeight = 600;
     private static final int TICK_MS = 16; // ~60fps
 
     private final javax.swing.Timer gameTimer;
+    private final Runnable onGameOver, onExitToMenu;
     private final PlayerShip player;
     private final List<IEnemy> enemies = new ArrayList<>();
     private final List<IProjectile> projectiles = new ArrayList<>();
@@ -30,17 +30,20 @@ public class GamePanel extends JPanel implements ActionListener {
     private final Set<Integer> keysDown = new HashSet<>();
     private static final Random RNG = new Random();
 
-    public GamePanel() {
-        setPreferredSize(new Dimension(screenWidth, screenHeight));
-        setBackground(Color.BLACK);
-        setFocusable(true);
+    public GamePanel(Runnable onGameOver, Runnable onExitToMenu) {
+        this.onGameOver = onGameOver;
+        this.onExitToMenu = onExitToMenu;
+        super(Map.of(
+            KeyEvent.VK_ESCAPE, onExitToMenu        
+        ));
 
         player = new PlayerShip();
 
         addKeyListener(new KeyAdapter() {
             @Override public void keyPressed(KeyEvent e) {
                 keysDown.add(e.getKeyCode());
-                if (gameOver && e.getKeyCode() == KeyEvent.VK_R) restart();
+                if (gameOver && e.getKeyCode() == KeyEvent.VK_ENTER) GamePanel.this.onGameOver.run();
+                else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) GamePanel.this.onExitToMenu.run();
             }
             @Override public void keyReleased(KeyEvent e) { keysDown.remove(e.getKeyCode()); }
         });
@@ -221,34 +224,12 @@ public class GamePanel extends JPanel implements ActionListener {
             g.drawString(scoreMsg, (screenWidth - fm.stringWidth(scoreMsg)) / 2, screenHeight / 2 + 24);
             g.setColor(Color.YELLOW);
             g.setFont(new Font("Monospaced", Font.PLAIN, 18));
-            String replayMsg = "Press [R] to Play Again";
+            String replayMsg = "Press [ENTER] for Scoreboard, [ESC] for Menu";
             fm = g.getFontMetrics();
             g.drawString(replayMsg, (screenWidth - fm.stringWidth(replayMsg)) / 2, screenHeight / 2 + 60);
     }
 
-    private void restart() {
-        player.reset();
-        enemies.clear();
-        projectiles.clear();
-        keysDown.clear();
-        score = 0;
-        tickCount = 0;
-        spawnCooldown = 120;
-        gameOver = false;
-        gameTimer.start();
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Space Invaders");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            GamePanel panel = new GamePanel();
-            frame.add(panel);
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setResizable(false);
-            frame.setVisible(true);
-            panel.requestFocusInWindow();
-        });
+    public int getScore() {
+        return score;
     }
 }
