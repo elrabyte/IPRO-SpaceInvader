@@ -5,6 +5,7 @@ import gamepanels.MainMenuPanel;
 import gamepanels.ScoreboardPanel;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -60,7 +61,8 @@ public class MainFrame extends JFrame {
 
     public void onGameOver() {
         int score = gamePanel.getScore();
-        scoreboardPanel.addScore(score);
+        String name = JOptionPane.showInputDialog(this, "Enter your name:", "Save score", JOptionPane.PLAIN_MESSAGE);
+        scoreboardPanel.addScore(name, score);
         showScoreboard();
     }
 

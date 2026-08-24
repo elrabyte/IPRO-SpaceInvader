@@ -14,9 +14,7 @@ public class GuiDrawHelper {
     public void DrawHint(String text) {
         g.setColor(Color.LIGHT_GRAY);
         g.setFont(new Font("Monospaced", Font.PLAIN, 16));
-        FontMetrics hintFm = g.getFontMetrics();
-        g.drawString(text, (GamePanel.screenWidth - hintFm.stringWidth(text)) / 2, GamePanel.screenHeight - 40);
-        
+        DrawStringInMiddle(text, GamePanel.screenHeight - 40);
     }
 
     public void DrawTitle(String text) {
@@ -26,7 +24,16 @@ public class GuiDrawHelper {
     public void DrawTitle(String text, int y) {
         g.setColor(Color.CYAN);
         g.setFont(new Font("Monospaced", Font.BOLD, 40));
-        FontMetrics titleFm = g.getFontMetrics();
-        g.drawString(text, (GamePanel.screenWidth - titleFm.stringWidth(text)) / 2, y);
+        DrawStringInMiddle(text, y);
+    }
+
+    public void SetToDefaultTextFont() {
+        g.setFont(new Font("Monospaced", Font.PLAIN, 22));
+        g.setColor(Color.WHITE);
+    }
+
+    public void DrawStringInMiddle(String line, int y) {
+        FontMetrics fm = g.getFontMetrics();
+        g.drawString(line, (GamePanel.screenWidth - fm.stringWidth(line)) / 2, y);
     }
 }

@@ -1,6 +1,8 @@
 package models;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.Set;
 
 import interfaces.IPlayerEntity;
 import interfaces.IProjectile;
@@ -23,7 +25,31 @@ public class PlayerShip implements IPlayerEntity {
         y = PANEL_H - 60;
     }
 
+
     @Override
+    public void handleMovement(Set<Integer> keysDown) {
+        PlayerShipMovementMapping mapping = getMovementMapping();
+        int dx = 0, dy = 0;
+        if (keysDown.contains(mapping.MoveLeft)) dx -= 1;
+        if (keysDown.contains(mapping.MoveRight)) dx += 1;
+        if (keysDown.contains(mapping.MoveUp)) dy -= 1;
+        if (keysDown.contains(mapping.MoveDown)) dy += 1;
+        move(dx, dy);
+    }
+
+    @Override
+    public PlayerShipMovementMapping getMovementMapping() {
+        return new PlayerShipMovementMapping(KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_SPACE);
+    }
+
+    @Override
+    public void handleShooting(Set<Integer> keysDown, List<IProjectile> projectiles) {
+        PlayerShipMovementMapping mapping = getMovementMapping();
+        if (keysDown.contains(mapping.Shoot)) {
+            shoot(projectiles);
+        }
+    }
+
     public void move(int dx, int dy) {
         x = Math.max(SIZE, Math.min(PANEL_W - SIZE, x + dx * speed));
         y = Math.max(BOTTOM_THIRD_TOP + SIZE, Math.min(PANEL_H - SIZE, y + dy * speed));
@@ -31,16 +57,10 @@ public class PlayerShip implements IPlayerEntity {
 
     @Override
     public void shoot(List<IProjectile> projectiles) {
-        tryShoot(projectiles);
-    }
-
-    private boolean tryShoot(List<IProjectile> projectiles) {
         if (currentShootCooldown <= 0) {
             projectiles.add(new PlayerSingleShotProjectile(x, y - SIZE));
             currentShootCooldown = shootCooldown;
-            return true;
         }
-        return false;
     }
 
     public void tick() {

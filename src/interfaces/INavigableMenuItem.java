@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface INavigatableMenuItem {
+public interface INavigableMenuItem {
     String getName();
     Runnable getAction();
 }

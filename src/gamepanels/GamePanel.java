@@ -31,11 +31,11 @@ public class GamePanel extends PanelBase implements ActionListener {
     private static final Random RNG = new Random();
 
     public GamePanel(Runnable onGameOver, Runnable onExitToMenu) {
+        super(Map.of(
+                KeyEvent.VK_ESCAPE, onExitToMenu
+        ));
         this.onGameOver = onGameOver;
         this.onExitToMenu = onExitToMenu;
-        super(Map.of(
-            KeyEvent.VK_ESCAPE, onExitToMenu        
-        ));
 
         player = new PlayerShip();
 
@@ -65,13 +65,10 @@ public class GamePanel extends PanelBase implements ActionListener {
     private void update() {
         tickCount++;
         
-        handlePlayerMovement();
-        player.applySpeedMultiplier(speedMultiplier);
-
         player.tick();
-
-        // --- Player shooting ---
-        if (keysDown.contains(KeyEvent.VK_SPACE)) player.shoot(projectiles);
+        player.handleMovement(keysDown);
+        player.handleShooting(keysDown, projectiles);
+        player.applySpeedMultiplier(speedMultiplier);
 
         addScorePerTimePassed();
 
@@ -110,15 +107,6 @@ public class GamePanel extends PanelBase implements ActionListener {
     }
     private void handleSpeedMultiplier() {
         speedMultiplier = 1.0 + tickCount / 1000.0;
-    }
-
-    private void handlePlayerMovement() {
-        int dx = 0, dy = 0;
-        if (keysDown.contains(KeyEvent.VK_A)) dx -= 1;
-        if (keysDown.contains(KeyEvent.VK_D)) dx += 1;
-        if (keysDown.contains(KeyEvent.VK_W)) dy -= 1;
-        if (keysDown.contains(KeyEvent.VK_S)) dy += 1;
-        player.move(dx, dy);
     }
 
     private void handleCollision(){
