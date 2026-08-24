@@ -8,18 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="43625ab0-68f8-4e8a-b06b-3814e1a47d0e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/models/PlayerShipMovementMapping.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gamepanels/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamepanels/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gamepanels/MainMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamepanels/MainMenuPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gamepanels/NavigatableMenuBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamepanels/NavigableMenuBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gamepanels/ScoreboardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamepanels/ScoreboardPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gamepanels/SimpleMenuItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamepanels/SimpleMenuItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/GuiDrawHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/GuiDrawHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/INavigatableMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/INavigableMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/INavigatableMenuItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/INavigableMenuItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaces/IPlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/IPlayerEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/PlayerShip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/PlayerShip.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +60,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "copilot.chat.legacySessionMetadata.migrated": "true",
-    "git-widget-placeholder": "feat/scores",
+    "git-widget-placeholder": "feat/performance",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.jshint": "true",

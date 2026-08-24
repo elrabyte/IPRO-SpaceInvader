@@ -19,8 +19,8 @@ public class GamePanel extends PanelBase {
     private final ScheduledExecutorService gameExecutor;
     private final Runnable onGameOver, onExitToMenu;
     private final PlayerShip player;
-    private final List<IEnemy> enemies = new CopyOnWriteArrayList<>();
-    private final List<IProjectile> projectiles = new CopyOnWriteArrayList<>();
+    private final List<IEnemy> enemies = new ArrayList<>();
+    private final List<IProjectile> projectiles = new ArrayList<>();
 
     private int score = 0;
     private int tickCount = 0;
@@ -28,7 +28,7 @@ public class GamePanel extends PanelBase {
     private boolean gameOver = false;
     private double speedMultiplier = 1.0;
 
-    private final Set<Integer> keysDown = Collections.synchronizedSet(new HashSet<>());
+    private final Set<Integer> keysDown = new HashSet<>();
     private static final Random RNG = new Random();
 
     public GamePanel(Runnable onGameOver, Runnable onExitToMenu) {
