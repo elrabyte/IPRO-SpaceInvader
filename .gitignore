@@ -1,6 +1,12 @@
 # Compiled class file
 *.class
 
+# Maven build output
+target/
+
+# Local game scoreboard
+src/scoreboard.json
+
 # Log file
 *.log
 
