@@ -1,7 +1,7 @@
 package gamepanels;
 
-import interfaces.INavigatableMenu;
-import interfaces.INavigatableMenuItem;
+import interfaces.INavigableMenu;
+import interfaces.INavigableMenuItem;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -13,16 +13,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public abstract class NavigatableMenuBase extends PanelBase implements INavigatableMenu {
+public abstract class NavigableMenuBase extends PanelBase implements INavigableMenu {
 
     protected static final Font ITEM_FONT = new Font("Monospaced", Font.BOLD, 28);
     protected static final int FIRST_ITEM_Y = 260;
     protected static final int ITEM_SPACING = 50;
 
-    private final List<INavigatableMenuItem> items = new ArrayList<>();
+    private final List<INavigableMenuItem> items = new ArrayList<>();
     private int selectedIndex = 0;
 
-    protected NavigatableMenuBase() {
+    protected NavigableMenuBase() {
         super(Map.of());
 
         addKeyListener(new KeyAdapter() {
@@ -52,7 +52,7 @@ public abstract class NavigatableMenuBase extends PanelBase implements INavigata
     }
 
     @Override
-    public List<INavigatableMenuItem> getMenuItems() {
+    public List<INavigableMenuItem> getMenuItems() {
         return Collections.unmodifiableList(items);
     }
 
@@ -87,5 +87,7 @@ public abstract class NavigatableMenuBase extends PanelBase implements INavigata
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawMenuItems(g);
+        var guiHelper = new helpers.GuiDrawHelper(g);
+        guiHelper.DrawHint("Use W/S or Up/Down to navigate, Enter to select");
     }
 }

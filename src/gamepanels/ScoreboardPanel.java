@@ -77,19 +77,18 @@ public class ScoreboardPanel extends PanelBase {
 
         final int lineHeight = 32;
 
-        g.setFont(new Font("Monospaced", Font.PLAIN, 22));
-        FontMetrics fm = g.getFontMetrics();
+        guiHelper.SetToDefaultTextFont();
         int y = 170;
         if (scores.isEmpty()) {
-            g.setColor(Color.WHITE);
-            String none = "No scores yet";
-            g.drawString(none, (getWidth() - fm.stringWidth(none)) / 2, y);
+            String noScoresText = "No scores yet";
+            guiHelper.DrawStringInMiddle(noScoresText, y);
         } else {
             for (int i = 0; i < scores.size(); i++) {
-                g.setColor(i == 0 ? Color.YELLOW : Color.WHITE);
+                var isTopScore = i == 0;
+                g.setColor(isTopScore ? Color.YELLOW : Color.WHITE);
                 ScoreEntry entry = scores.get(i);
                 String line = String.format("%2d. %-16s %d", i + 1, entry.getName(), entry.getScore());
-                g.drawString(line, (getWidth() - fm.stringWidth(line)) / 2, y);
+                guiHelper.DrawStringInMiddle(line, y);
                 y += lineHeight;
             }
         }

@@ -1,8 +1,8 @@
 package gamepanels;
 
-import interfaces.INavigatableMenuItem;
+import interfaces.INavigableMenuItem;
 
-public class SimpleMenuItem implements INavigatableMenuItem {
+public class SimpleMenuItem implements INavigableMenuItem {
     private final String name;
     private final Runnable action;
     SimpleMenuItem(String name, Runnable action) { this.name = name; this.action = action; }

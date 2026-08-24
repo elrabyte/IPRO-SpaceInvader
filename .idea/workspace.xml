@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BackgroundAgentGlobalSettings">
+    <option name="selectedModelId" value="auto" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="43625ab0-68f8-4e8a-b06b-3814e1a47d0e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/models/PlayerShipMovementMapping.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gamepanels/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamepanels/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gamepanels/MainMenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamepanels/MainMenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gamepanels/NavigatableMenuBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamepanels/NavigableMenuBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gamepanels/ScoreboardPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamepanels/ScoreboardPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gamepanels/SimpleMenuItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamepanels/SimpleMenuItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/GuiDrawHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/GuiDrawHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfaces/INavigatableMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/INavigableMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfaces/INavigatableMenuItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/INavigableMenuItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfaces/IPlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaces/IPlayerEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/PlayerShip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/PlayerShip.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/tatsu/source/repos/IPRO-SpaceInvader" value="3IMSrQpzJSfooeo7Ord5mUUd8KL" />
+    </persistenceIdMap>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3IM6fhSBurBrkP9YIYuDLqJC9gb" />
+  <component name="ProjectSessionTemplates">
+    <option name="panelTemplate">
+      <template>
+        <option name="modeId" value="Agent" />
+        <option name="model">
+          <model>
+            <option name="modelType" value="builtin_id" />
+            <option name="modelValue" value="auto" />
+          </model>
+        </option>
+        <option name="targetType" value="BACKGROUND" />
+        <option name="worktreeMode" value="WORKSPACE" />
+      </template>
+    </option>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.MainFrame.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "copilot.chat.legacySessionMetadata.migrated": "true",
+    "git-widget-placeholder": "feat/scores",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.jshint": "true",
+    "node.js.selected.package.jshint": "",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.updates"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="models" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-34e2839f716b-intellij.indexing.shared.core-IU-262.9437.185" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.9437.185" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="43625ab0-68f8-4e8a-b06b-3814e1a47d0e" name="Changes" comment="" />
+      <created>1787562196972</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1787562196972</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
