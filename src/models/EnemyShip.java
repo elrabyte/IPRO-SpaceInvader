@@ -25,7 +25,6 @@ public class EnemyShip implements IEnemy, IShooting {
 
     @Override
     public void applySpeedMultiplier(double speedMultiplier) {
-        speed = (int) Math.round(baseSpeed * speedMultiplier);
         shootCoolDown = Math.max(minShootCoolDown, (int)(baseShootCoolDown / speedMultiplier));
     }
 
