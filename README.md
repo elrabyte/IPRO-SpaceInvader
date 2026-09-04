@@ -26,7 +26,7 @@ legen:
   Hitboxes überschneiden (`intersects`). So musste ich keine eigene
   Kollisionsberechnung für Dreiecke/Kreise implementieren.
 - Punkte-/Scoring-System: Jeder abgeschossene Asteroid und jedes gegnerische Schiff
-  gibt Punkte, zusätzlich fliesst auch die **vergangene Spielzeit** in die Punktzahl mit
+  gibt Punkte, zusätzlich fliesst auch die vergangene Spielzeit in die Punktzahl mit
   ein.
 - Speicherung der Scores/Leaderboard lokal als **JSON-Datei**.
 
@@ -62,7 +62,7 @@ teilen und wiederverwenden lässt (z. B. für Entitäten, Projektile, Gegner).
 ## 2. Reflexion
 
 ### 2.1 Was habe ich gelernt?
-Im Rahmen dieses Projekts habe ich die Programmiersprache **Java** gelernt – von den
+Im Rahmen dieses Projekts habe ich die Programmiersprache **Java** gelernt, von den
 Grundlagen (Syntax, Klassen, Objektorientierung) bis hin zur praktischen Anwendung in
 einem eigenen, funktionierenden Spiel. Konkret habe ich unter anderem gelernt bzw.
 vertieft:
@@ -88,7 +88,7 @@ Projekt anzuwenden:
   implementieren beide `IEnemy`, verhalten sich aber unterschiedlich (`updateState`,
   `render`). Nur `EnemyShip` implementiert zusätzlich `IShooting`, weshalb im Code
   per `instanceof`-Prüfung (`enemy instanceof IShooting`) entschieden wird, ob ein
-  Gegner schiessen kann – die restliche Logik bleibt für beide Gegnertypen identisch.
+  Gegner schiessen kann. Die restliche Logik bleibt für beide Gegnertypen identisch.
 - **Interfaces für geteilte Logik**: `IProjectile` wird sowohl von
   `PlayerSingleShotProjectile` als auch von `EnemySingleShotProjectile` implementiert,
   wodurch die Kollisions- und Update-Logik im `GamePanel` nur einmal geschrieben
@@ -105,5 +105,5 @@ den konkreten Code habe ich selbst geschrieben und verstehe ihn entsprechend.
 ### 2.4 Fazit
 Insgesamt bin ich jetzt etwas bekannter mit Java. Die grösste neue Erkenntnis aus diesem
 Projekt war jedoch, **wie** und **dass** man in Java überhaupt externe Bibliotheken mit
-**Maven** einbinden kann – dieses Wissen nehme ich als wichtigsten Lerneffekt aus dem
+**Maven** einbinden kann. Dieses Wissen nehme ich als wichtigsten Lerneffekt aus dem
 IPro mit.
