@@ -102,12 +102,17 @@ public class PlayerShip implements IPlayerEntity {
         int[] xp = {x, x - SIZE, x + SIZE};
         int[] yp = {y - SIZE, y + SIZE, y + SIZE};
         g.fillPolygon(xp, yp, 3);
-        // HP pips
+        DrawHealthBar(g);
+
+    }
+
+    private void DrawHealthBar(Graphics g) {
         for (int i = 0; i < hp; i++) {
             g.setColor(Color.RED);
             g.fillRect(10 + i * 14, 10, 10, 10);
         }
     }
+
 
     @Override
     public void applySpeedMultiplier(double speedMultiplier) {
